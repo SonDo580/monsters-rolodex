@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 export default class SearchBox extends Component {
   render() {
-    const { onSearch } = this.props;
+    const { onSearch, placeholder } = this.props;
 
     return (
       <input
         type="search"
         className="search-box"
-        placeholder="Search monsters"
+        placeholder={placeholder}
         onChange={onSearch}
       />
     );
@@ -18,4 +18,5 @@ export default class SearchBox extends Component {
 
 SearchBox.propTypes = {
   onSearch: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
