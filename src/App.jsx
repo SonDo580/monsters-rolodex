@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 import CardList from "./components/CardList";
@@ -24,8 +24,12 @@ export default function App() {
   const searchMonsters = (event) =>
     setSearchText(event.target.value.toLowerCase());
 
-  const filteredMonsters = monsters.filter((monster) =>
-    monster.name.toLowerCase().includes(searchText)
+  const filteredMonsters = useMemo(
+    () =>
+      monsters.filter((monster) =>
+        monster.name.toLowerCase().includes(searchText)
+      ),
+    [monsters, searchText]
   );
 
   return (
