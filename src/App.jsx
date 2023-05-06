@@ -1,22 +1,14 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 import CardList from "./components/CardList";
 import SearchBox from "./components/SearchBox";
 
-class App extends Component {
-  constructor() {
-    super();
+export default function App() {
+  const [monsters, setMonsters] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
-    this.state = {
-      monsters: [],
-      searchText: "",
-    };
-
-    this.searchMonsters = this.searchMonsters.bind(this);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         if (!response.ok) {
@@ -25,30 +17,22 @@ class App extends Component {
 
         return response.json();
       })
-      .then((users) => this.setState({ monsters: users }))
+      .then((users) => setMonsters(users))
       .catch((err) => console.error(err.message));
-  }
+  }, []);
 
-  searchMonsters(event) {
-    this.setState({ searchText: event.target.value.toLowerCase() });
-  }
+  const searchMonsters = (event) =>
+    setSearchText(event.target.value.toLowerCase());
 
-  render() {
-    const { monsters, searchText } = this.state;
-    const { searchMonsters } = this;
+  const filteredMonsters = monsters.filter((monster) =>
+    monster.name.toLowerCase().includes(searchText)
+  );
 
-    const filteredMonsters = monsters.filter((monster) =>
-      monster.name.toLowerCase().includes(searchText)
-    );
-
-    return (
-      <div className="App">
-        <h1 className="app-title">Monsters Rolodex</h1>
-        <SearchBox onSearch={searchMonsters} placeholder="Search monsters" />
-        <CardList monsters={filteredMonsters} />
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <h1 className="app-title">Monsters Rolodex</h1>
+      <SearchBox onSearch={searchMonsters} placeholder="Search monsters" />
+      <CardList monsters={filteredMonsters} />
+    </div>
+  );
 }
-
-export default App;
