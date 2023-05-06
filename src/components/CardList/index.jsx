@@ -1,5 +1,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
+
+import "./style.css";
 import Card from "../Card";
 
 export default class CardList extends Component {
@@ -7,7 +9,7 @@ export default class CardList extends Component {
     const { monsters } = this.props;
 
     return (
-      <div>
+      <div className="card-list">
         {monsters.map((monster) => (
           <Card key={monster.id} monster={monster} />
         ))}
