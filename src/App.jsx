@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 
 class App extends Component {
@@ -7,12 +6,21 @@ class App extends Component {
     super();
 
     this.state = {
-      monsters: [
-        { name: "Linda", id: uuidv4() },
-        { name: "Frank", id: uuidv4() },
-        { name: "Jacky", id: uuidv4() },
-      ],
+      monsters: [],
     };
+  }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error fetching monsters");
+        }
+
+        return response.json();
+      })
+      .then((users) => this.setState({ monsters: users }))
+      .catch((err) => console.error(err.message));
   }
 
   render() {
