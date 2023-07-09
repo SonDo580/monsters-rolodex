@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
+import { Monster } from "../../types";
 import "./style.css";
 
-export default function Card({ monster }) {
+type CardProps = {
+  monster: Monster;
+};
+
+export default function Card({ monster }: CardProps) {
   const { id, name, email } = monster;
 
   return (
@@ -15,7 +19,3 @@ export default function Card({ monster }) {
     </div>
   );
 }
-
-Card.propTypes = {
-  monster: PropTypes.object.isRequired,
-};

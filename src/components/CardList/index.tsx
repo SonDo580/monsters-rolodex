@@ -1,8 +1,12 @@
-import PropTypes from "prop-types";
+import { Monster } from "../../types";
 import "./style.css";
 import Card from "../Card";
 
-export default function CardList({ monsters }) {
+type CardListProps = {
+  monsters: Monster[];
+};
+
+export default function CardList({ monsters }: CardListProps) {
   return (
     <div className="card-list">
       {monsters.map((monster) => (
@@ -11,7 +15,3 @@ export default function CardList({ monsters }) {
     </div>
   );
 }
-
-CardList.propTypes = {
-  monsters: PropTypes.array.isRequired,
-};
